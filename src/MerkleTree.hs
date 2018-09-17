@@ -11,13 +11,13 @@ data MerkleTree a = EmptyMerkleTree
 
 -- print binary tree in list format
 printMerkleTree EmptyMerkleTree               = "root node"
-printMerkleTree (MerkleTreeNode a left right) = unlines (printMerkleTree_helper (MerkleTreeNode a left right))
-
-printMerkleTree_helper EmptyMerkleTree               = []
-printMerkleTree_helper (MerkleTreeNode a left right) = show a : printMerkleTree_subtree left right
+printMerkleTree (MerkleTreeNode a left right) = unlines (helperPrintMerkleTree (MerkleTreeNode a left right))
         where
-            printMerkleTree_subtree left right =
-                ((showTree "+- " "|  ") (printMerkleTree_helper right))
-                    ++ (showTree "`- " "   ") (printMerkleTree_helper left)
-            showTree first rest = zipWith (++) (first : repeat rest)
+              helperPrintMerkleTree EmptyMerkleTree               = []
+              helperPrintMerkleTree (MerkleTreeNode a left right) = show a : printMerkleTree_subtree left right
+                  where
+                      printMerkleTree_subtree left right =
+                          ((showTree "+- " "|  ") (helperPrintMerkleTree right))
+                              ++ (showTree "`- " "   ") (helperPrintMerkleTree left)
+                      showTree first rest = zipWith (++) (first : repeat rest)
 
